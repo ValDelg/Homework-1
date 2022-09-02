@@ -1,0 +1,59 @@
+#Valery Delgado Homework 1
+#Group Members: Holli Tai, Liam O'Neill
+# Date September 1, 2022
+
+#Basic Commands from Lecture 1
+x <- 1:50
+w <- 1 + sqrt(x)/2
+example1 <- data.frame(x=x, y= x + rnorm(x)*w)
+attach(example1)
+fm <- lm(y ~ x)
+summary(fm)
+lrf <- lowess(x, y)
+plot(x, y)
+lines(x, lrf$y)
+abline(0, 1, lty=3)
+abline(coef(fm))
+detach()
+#Simple Statistics 
+load("~/Downloads/Stats and Econometrics/Household_Pulse_data.RData")
+Household_Pulse_data[1:10,1:7]
+attach(Household_Pulse_data)
+summary(Household_Pulse_data)
+summary(TBIRTH_YEAR[GENID_DESCRIBE == "female"])
+summary(TBIRTH_YEAR[GENID_DESCRIBE == "male"])
+summary(TBIRTH_YEAR[GENID_DESCRIBE == "transgender"])
+summary(TBIRTH_YEAR[GENID_DESCRIBE == "other"])
+summary(TBIRTH_YEAR[GENID_DESCRIBE == "NA"])
+#Find Mean and SD ages of females and males
+mean(TBIRTH_YEAR[GENID_DESCRIBE == "female"])
+sd(TBIRTH_YEAR[GENID_DESCRIBE == "female"])
+mean(TBIRTH_YEAR[GENID_DESCRIBE == "male"])
+sd(TBIRTH_YEAR[GENID_DESCRIBE == "male"])
+#Find Variables
+hist(TBIRTH_YEAR[(TBIRTH_YEAR < 1950)])
+mean(TBIRTH_YEAR[ (GENID_DESCRIBE == "female") & (TBIRTH_YEAR > 1933) ]) 
+summary(EEDUC)
+#Lecture 1A
+install.packages("tidyverse")
+install.packages("plyr")
+library(tidyverse)
+library(plyr)
+summary(EST_ST)
+summary(INCOME)
+ddply(Household_Pulse_data, .(EST_ST), summarize, mean = round(mean(2021 - TBIRTH_YEAR), 2), sd = round(sd(2021 - TBIRTH_YEAR), 2), n_obsv = length(EST_ST))
+ddply(Household_Pulse_data, .(EST_ST), summarize, age90th = quantile((2021 - TBIRTH_YEAR),probs = 0.9), age10th = quantile((2021 - TBIRTH_YEAR),probs = 0.1), n_obs = length(TBIRTH_YEAR))
+table(EEDUC,GENID_DESCRIBE)
+xtabs(~EEDUC + GENID_DESCRIBE)
+prop.table(table(EEDUC,GENID_DESCRIBE))
+mean(TBIRTH_YEAR[(REGION == "Northeast")])
+restrict1 <- as.logical((REGION == "Northeast"))
+dat_northeast <- subset(Household_Pulse_data, restrict1)
+
+detach()
+attach(dat_northeast)
+
+mean(TBIRTH_YEAR)
+detach()
+#Dice Data for my 20 rolls:3,1,1,3,4,1,5,6,5,3,5,5,5,2,6,6,1,6,1,5,5
+
